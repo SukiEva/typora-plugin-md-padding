@@ -36,6 +36,7 @@
     "rollup-plugin-typora": "npm:@typora-community-plugin/rollup-plugin-typora@^1.0.4",
     "sass": "^1.69.5",
     "tslib": "^2.6.2",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "md-padding": "^1.9.2"
   }
 }
