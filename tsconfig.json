@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "types": [
-      "jquery",
-      "node"
-    ],
+    "types": ["jquery", "node"],
     "target": "ESNext",
     "baseUrl": ".",
     "module": "ESNext",
@@ -14,7 +11,8 @@
     "importHelpers": true,
     "isolatedModules": true,
     "strictNullChecks": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "./dist"
   },
-  "include": ["src/**/*.ts", "src/**/*.js"]
+  "include": ["src/**/*.ts"]
 }

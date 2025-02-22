@@ -1,5 +1,6 @@
 import { Plugin, PluginSettings } from '@typora-community-plugin/core';
-import { PluginCommand, PluginOptions, PluginSettingTab } from './core';
+import { PluginCommand } from './core/command';
+import { PluginOptions, PluginSettingTab } from './core/setting';
 
 export default class MdPaddingPlugin extends Plugin<PluginOptions> {
   onload() {
