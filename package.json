@@ -1,14 +1,15 @@
 {
   "private": true,
-  "name": "typora-plugin-example",
-  "version": "",
+  "name": "typora-plugin-md-padding",
+  "version": "1.0.0",
   "description": "",
   "type": "module",
   "main": "",
   "scripts": {
     "build:dev": "node build.js",
     "build": "rollup -c rollup.config.js",
-    "pack": "pnpm run build && node pack.js"
+    "pack": "pnpm run build && node pack.js",
+    "clean": "rm -rf node_modules"
   },
   "keywords": [],
   "author": "",
