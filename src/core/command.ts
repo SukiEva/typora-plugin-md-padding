@@ -14,6 +14,7 @@ export class PluginCommand extends Component {
       id: 'markdown-padding',
       title: R.commandTitle,
       scope: 'editor',
+      hotkey: 'Ctrl+Alt+L',
       callback: () => {
         this.onCommandCallback();
       },
@@ -24,7 +25,7 @@ export class PluginCommand extends Component {
     this.toast(R.commandMessage);
     try {
       await File.saveUseNode();
-      let content = getMarkdown();
+      let content: string = getMarkdown();
       content = this.formatContent(content);
       content = this.removeLineBreak(content);
       await fs.writeText(File.bundle.filePath, content);
@@ -35,11 +36,11 @@ export class PluginCommand extends Component {
   }
 
   private removeLineBreak(content: string): string {
-    const maxNum = this.plugin.settings.get('lineBreak') ?? 0;
+    const maxNum: number = this.plugin.settings.get('lineBreak');
     if (maxNum > 0) {
-      const lineBreak = content.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
-      const regexp = new RegExp(`(${lineBreak}){${maxNum + 1},}`, 'g');
-      const breaks = lineBreak.repeat(maxNum);
+      const lineBreak: '\r\n' | '\n' = content.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
+      const regexp: RegExp = new RegExp(`(${lineBreak}){${maxNum + 1},}`, 'g');
+      const breaks: string = lineBreak.repeat(maxNum);
       content = content.replace(regexp, breaks);
     }
     return content;

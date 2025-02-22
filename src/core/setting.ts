@@ -2,10 +2,16 @@ import { SettingItem, SettingTab } from '@typora-community-plugin/core';
 import type MdPaddingPlugin from 'src/main';
 import { R } from './i18n';
 
+export const DEFAULT_SETTINGS: PluginOptions = {
+  lineBreak: 2,
+  ignoreWords: [],
+  ignorePatterns: ['<br\\s*?/?>', ':[0-9a-z_\\-]+?:', '<u>.+?</u>', '<span style=".+?">.+?</span>'],
+};
+
 export interface PluginOptions {
-  lineBreak?: number;
-  ignoreWords?: string[];
-  ignorePatterns?: string[];
+  lineBreak: number;
+  ignoreWords: string[];
+  ignorePatterns: string[];
 }
 
 export class PluginSettingTab extends SettingTab {
@@ -28,23 +34,24 @@ export class PluginSettingTab extends SettingTab {
     this.addSetting((setting: SettingItem) => {
       setting.addName(option);
       setting.addText((input: HTMLInputElement) => {
-        const optionValue = this.plugin.settings.get(option);
+        const optionValue: number | string[] = this.plugin.settings.get(option);
         if (option === 'lineBreak') {
+          setting.addDescription(R.lineBreak);
           input.type = 'number';
-          input.value = optionValue ? String(optionValue) : '0';
+          input.value = String(optionValue as number);
           input.oninput = () => {
             this.plugin.settings.set(option, Number(input.value));
           };
           return;
         }
         if (option === 'ignoreWords') {
-          input.placeholder = 'word1,word2';
           setting.addDescription(R.ignoreWords);
+          input.placeholder = 'word1,word2';
         } else if (option === 'ignorePatterns') {
-          input.placeholder = 'pattern1,pattern2';
           setting.addDescription(R.ignorePatterns);
+          input.placeholder = 'pattern1,pattern2';
         }
-        input.value = (optionValue as string[])?.join(',') ?? '';
+        input.value = (optionValue as string[]).join(',');
         input.oninput = () => {
           this.plugin.settings.set(option, input.value.split(','));
         };
