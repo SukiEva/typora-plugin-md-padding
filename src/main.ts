@@ -6,6 +6,7 @@ export default class MdPaddingPlugin extends Plugin<PluginOptions> {
     this.registerSettings(new PluginSettings(this.app, this.manifest, { version: 1 }));
 
     this.addChild(new PluginCommand(this));
+
     this.registerSettingTab(new PluginSettingTab(this));
   }
 }

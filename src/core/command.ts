@@ -14,11 +14,13 @@ export class PluginCommand extends Component {
       id: 'markdown-padding',
       title: R.commandTitle,
       scope: 'editor',
-      callback: () => this.onCommandCallback(),
+      callback: () => {
+        this.onCommandCallback();
+      },
     });
   }
 
-  private onCommandCallback = async () => {
+  private async onCommandCallback(): Promise<void> {
     this.toast(R.commandMessage);
     try {
       await File.saveUseNode();
@@ -30,9 +32,9 @@ export class PluginCommand extends Component {
     } catch (e) {
       this.toast(String(e));
     }
-  };
+  }
 
-  private removeLineBreak = (content: string) => {
+  private removeLineBreak(content: string): string {
     const maxNum = this.plugin.settings.get('lineBreak') ?? 0;
     if (maxNum > 0) {
       const lineBreak = content.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
@@ -41,14 +43,16 @@ export class PluginCommand extends Component {
       content = content.replace(regexp, breaks);
     }
     return content;
-  };
+  }
 
-  private formatContent = (content: string) => {
+  private formatContent(content: string): string {
     return padMarkdown(content, {
       ignoreWords: this.plugin.settings.get('ignoreWords'),
       ignorePatterns: this.plugin.settings.get('ignorePatterns'),
     });
-  };
+  }
 
-  private toast = (message: string) => new Notice(message, 2000).show();
+  private toast(message: string): void {
+    new Notice(message, 2000).show();
+  }
 }

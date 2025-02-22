@@ -24,7 +24,7 @@ export class PluginSettingTab extends SettingTab {
     super.show();
   }
 
-  private addPluginOption = (option: 'lineBreak' | 'ignoreWords' | 'ignorePatterns') => {
+  private addPluginOption(option: 'lineBreak' | 'ignoreWords' | 'ignorePatterns'): void {
     this.addSetting((setting: SettingItem) => {
       setting.addName(option);
       setting.addText((input: HTMLInputElement) => {
@@ -50,5 +50,5 @@ export class PluginSettingTab extends SettingTab {
         };
       });
     });
-  };
+  }
 }
