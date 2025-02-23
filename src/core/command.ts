@@ -24,7 +24,6 @@ export class PluginCommand extends Component {
   private async onCommandCallback(): Promise<void> {
     this.toast(R.commandMessage);
     try {
-      await File.saveUseNode();
       let content: string = getMarkdown();
       content = this.formatContent(content);
       content = this.removeLineBreak(content);
