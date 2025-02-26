@@ -1,10 +1,12 @@
-import { Component, fs, Notice } from '@typora-community-plugin/core';
+import { Component, Notice } from '@typora-community-plugin/core';
 import { padMarkdown } from 'md-padding';
 import { File, getMarkdown } from 'typora';
 import type MdPaddingPlugin from 'src/main';
 import { R } from './i18n';
 
 export class PluginCommand extends Component {
+  private noticeTimeOut: number;
+
   constructor(private plugin: MdPaddingPlugin) {
     super();
   }
@@ -15,19 +17,18 @@ export class PluginCommand extends Component {
       title: R.commandTitle,
       scope: 'editor',
       hotkey: 'Ctrl+Alt+L',
-      callback: () => {
-        this.onCommandCallback();
-      },
+      callback: () => this.onCommandCallback(),
     });
   }
 
   private async onCommandCallback(): Promise<void> {
+    this.noticeTimeOut = this.plugin.settings.get('noticeTimeOut');
     this.toast(R.commandMessage);
     try {
       let content: string = getMarkdown();
       content = this.formatContent(content);
       content = this.removeLineBreak(content);
-      await fs.writeText(File.bundle.filePath, content);
+      File.reloadContent(content);
       this.toast(R.commandFinish);
     } catch (e) {
       this.toast(String(e));
@@ -53,6 +54,6 @@ export class PluginCommand extends Component {
   }
 
   private toast(message: string): void {
-    new Notice(message, 2000).show();
+    new Notice(message, this.noticeTimeOut).show();
   }
 }
