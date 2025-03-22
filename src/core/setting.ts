@@ -19,6 +19,8 @@ export interface PluginOptions {
 type Option = 'lineBreak' | 'noticeTimeOut' | 'ignoreWords' | 'ignorePatterns';
 
 export class PluginSettingTab extends SettingTab {
+  private isInit: boolean = false;
+
   get name(): string {
     return 'Markdown Padding';
   }
@@ -28,10 +30,13 @@ export class PluginSettingTab extends SettingTab {
   }
 
   show(): void {
-    this.addPluginOption('lineBreak');
-    this.addPluginOption('noticeTimeOut');
-    this.addPluginOption('ignoreWords');
-    this.addPluginOption('ignorePatterns');
+    if (!this.isInit) {
+      this.addPluginOption('lineBreak');
+      this.addPluginOption('noticeTimeOut');
+      this.addPluginOption('ignoreWords');
+      this.addPluginOption('ignorePatterns');
+      this.isInit = true;
+    }
     super.show();
   }
 
